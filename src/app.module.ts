@@ -16,8 +16,9 @@ import { UserModule } from './user/user.module';
       password: 'Robson@77',
       username: 'root',
       port: 3306,
-      synchronize: true,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      migrations: [`${__dirname}/migration/{.ts,*.js}`],
+      migrationsRun: true
     })
   ],
   controllers: [],

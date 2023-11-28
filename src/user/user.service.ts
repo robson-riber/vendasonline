@@ -20,9 +20,11 @@ export class UserService {
 
         return this.userRepository.save({
             ...CreateUserDto,
+            type_user: 1,
             password: passwordhash
         })
     }
+    
 
     async getAllUser(): Promise<UserEntity[]>{
     
