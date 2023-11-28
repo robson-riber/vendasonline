@@ -7,7 +7,7 @@ export class CreateTableCity1701177594556 implements MigrationInterface {
         queryRunner.query(`CREATE TABLE city (
             id integer NOT NULL AUTO_INCREMENT,
             state_id integer NOT NULL,
-            name VARCHAR(30) NOT NULL,
+            name VARCHAR(40) NOT NULL,
             created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
