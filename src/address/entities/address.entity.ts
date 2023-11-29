@@ -8,7 +8,7 @@ export class AddressEntity {
     id: number;
 
     @Column({name: 'user_id', nullable: false})
-    user_id: number;
+    userId: number;
 
     @Column({name: 'complement', nullable: true})
     complement: string;
@@ -20,7 +20,7 @@ export class AddressEntity {
     cep: string;
 
     @Column({name: 'city_id', nullable: false})
-    city_id: number;
+    cityId: number;
 
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date;
