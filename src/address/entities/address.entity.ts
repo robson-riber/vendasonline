@@ -7,7 +7,7 @@ export class AddressEntity {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column({name: 'user_id', nullable: false})
+    @Column({name: 'user_id', nullable: true})
     userId: number;
 
     @Column({name: 'complement', nullable: true})

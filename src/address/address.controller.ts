@@ -9,13 +9,12 @@ export class AddressController {
 
     constructor(private readonly addressService: AddressService){}
 
-    @UsePipes(ValidationPipe)
     @Post('/:userId')
+    @UsePipes(ValidationPipe)
     async createAddress(
-        createAddressDto: CreateAddressDto,
-        @Body() 
+        @Body() createAddressDto: CreateAddressDto,
         @Param('userId') userId: number): Promise<AddressEntity>{
-        return this.addressService.createAddress(createAddressDto, userId)
+        return this.addressService.createAddress(createAddressDto, userId);
 
     }
 
