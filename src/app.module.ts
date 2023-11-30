@@ -5,8 +5,7 @@ import { UserModule } from './user/user.module';
 import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
-import { CacheService } from './cache/cache.service';
-import { CacheModule } from './cache/cache.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +27,7 @@ import { CacheModule } from './cache/cache.module';
     StateModule,
     CityModule,
     AddressModule,
+    AuthModule,
     //CacheModule
   ],
   controllers: [],
