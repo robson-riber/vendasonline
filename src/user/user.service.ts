@@ -5,6 +5,7 @@ import { retry } from 'rxjs';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UserEntity } from './entities/user.entity';
+import { UserType } from './enum/user-type.enum';
 
 @Injectable()
 export class UserService {
@@ -27,7 +28,7 @@ export class UserService {
 
         return this.userRepository.save({
             ...createUserDto,
-            type_user: 1,
+            type_user: UserType.User,
             password: passwordhash
         })
     }

@@ -1,2 +1,3 @@
 https://github.com/juliossena/vendas-online-backend/
 
+https://docs.nestjs.com
