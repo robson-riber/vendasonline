@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { CategotyModule } from './categoty/categoty.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -31,7 +33,9 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
     CityModule,
     AddressModule,
     AuthModule,
-    JwtModule
+    JwtModule,
+    CategotyModule,
+    ProductModule
     //CacheModule
   ],
   controllers: [],

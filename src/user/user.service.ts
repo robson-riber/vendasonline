@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
 import { retry } from 'rxjs';
@@ -14,22 +14,28 @@ export class UserService {
         private readonly userRepository: Repository<UserEntity>,
     ){}
     
-    async createUser(CreateUserDto: CreateUserDto): Promise<UserEntity> {
+    async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+
+        const user = await this.findUserByEmail(createUserDto.email).catch(() => undefined);
+
+        if (user) {
+            throw new BadGatewayException('Email já registrado!');
+        }
 
         const saltOrRounds = 10;
-        const passwordhash = await hash(CreateUserDto.password, saltOrRounds);
+        const passwordhash = await hash(createUserDto.password, saltOrRounds);
 
         return this.userRepository.save({
-            ...CreateUserDto,
+            ...createUserDto,
             type_user: 1,
             password: passwordhash
         })
     }
 
+
     async getAllUser(): Promise<UserEntity[]>{
     
         return this.userRepository.find();
-
     }
 
 
