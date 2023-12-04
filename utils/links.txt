@@ -3,3 +3,59 @@ https://github.com/juliossena/vendas-online-backend/
 https://docs.nestjs.com
 
 https://dbdiagram.io/home
+
+
+https://github.com/juliossena/vendas-online-backend/
+
+https://docs.nestjs.com
+
+
+Criando o Projeto
+nest new "nome do projeto"
+
+Subindo o server
+npm run start ou npm run start:dev
+
+Instalando o módulo para encruptar senha hash
+npm i bcrypt
+npm i -D @types/bcrypt
+
+Instanado pacote Mysql
+npm install --save typeorm mysql2
+
+Instando o pacote typeorm
+npm install --save typeorm mysql2 @nestjs/typeorm
+
+Criando o arquivode Migration
+npx typeorm migration:create ./src/migration/create_table_city
+
+Instalando pacote Cache-Manager
+npm install cache-nanager
+npm install @nestjs/cache-manager cache-manager
+
+Instalando Authentication
+npm install --save @nestjs/passport passport passport-local
+$ npm install --save-dev @types/passport-local
+$ nest g module auth
+$ nest g service auth
+
+
+
+
+
+
+
+
+Comandos para criar objetos das tabelas
+
+Criar o Service
+nest g service "nome da tabela ou objeto"
+
+Criar o Controller
+nest g controller "nome da tabela ou objeto"
+
+Criar o Módulo
+nest g module "nome da tabela ou objeto"
+
+
+
