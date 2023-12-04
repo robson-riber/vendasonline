@@ -6,10 +6,10 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CartService {
 
-    constructor{
-    @InjectRepository(CartEntity)
-    private readonly cartRepository: Repository<CartEntity>
-    }{}
+    constructor(
+        @InjectRepository(CartEntity)
+        private readonly cartRepository: Repository<CartEntity>
+    ){}
 
 }
 

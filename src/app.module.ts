@@ -12,6 +12,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './categoty/category.module';
 import { CartModule } from './cart/cart.module';
+import { CartProductModule } from './cart-product/cart-product.module';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { CartModule } from './cart/cart.module';
     JwtModule,
     CategoryModule,
     ProductModule,
-    CartModule
+    CartModule,
+    CartProductModule
     //CacheModule
   ],
   controllers: [],
