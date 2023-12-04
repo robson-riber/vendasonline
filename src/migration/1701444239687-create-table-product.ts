@@ -10,7 +10,7 @@ export class CreateTableProduct1701444239687 implements MigrationInterface {
                 category_id integer NOT NULL,
                 name VARCHAR(40) NOT NULL,
                 price double precision NOT NULL,
-                image VARCHAR(40) NOT NULL,
+                image VARCHAR(200) NOT NULL,
                 created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 updated_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 primary key (id),
