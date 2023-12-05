@@ -6,7 +6,7 @@ export class CreateTableCart1701727353100 implements MigrationInterface {
 
         queryRunner.query(`
             CREATE TABLE cart (
-                id integer NOT NULL,
+                id integer NOT NULL AUTO_INCREMENT,
                 user_id integer NOT NULL,
                 created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
                 updated_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
