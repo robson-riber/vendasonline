@@ -7,4 +7,5 @@ export class UpdateCartDto{
 
     @IsNumber()
     amount: number;
+    
 }

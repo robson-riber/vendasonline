@@ -13,6 +13,8 @@ import { ProductModule } from './product/product.module';
 import { CategoryModule } from './categoty/category.module';
 import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
+import { PaymentStatusModule } from './payment-status/payment-status.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -39,7 +41,9 @@ import { CartProductModule } from './cart-product/cart-product.module';
     CategoryModule,
     ProductModule,
     CartModule,
-    CartProductModule
+    CartProductModule,
+    PaymentModule,
+    PaymentStatusModule
     //CacheModule
   ],
   controllers: [],
