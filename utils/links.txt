@@ -40,12 +40,6 @@ $ nest g module auth
 $ nest g service auth
 
 
-
-
-
-
-
-
 Comandos para criar objetos das tabelas
 
 Criar o Service

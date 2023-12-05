@@ -2,7 +2,7 @@ import { CartEntity } from "src/cart/entities/cart.entity";
 import { ProductEntity } from "src/product/entities/product.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Entity({name: 'cart-product'})
+@Entity({name: 'cart_product'})
 export class CartProductEntity{
 
     @PrimaryGeneratedColumn('increment')
@@ -29,7 +29,6 @@ export class CartProductEntity{
     )
     @JoinColumn({name: 'product_id', referencedColumnName: 'id'})
     product?: ProductEntity;
-
 
     @ManyToOne(
         () => CartEntity,
