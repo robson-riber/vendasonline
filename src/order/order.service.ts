@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CartService } from 'src/cart/cart.service';
+import { OrderProductService } from 'src/order-product/order-product.service';
+import { PaymentEntity } from 'src/payment/entities/payment.entity';
 import { PaymentService } from 'src/payment/payment.service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dtos/create-order.dto';
@@ -10,14 +13,35 @@ export class OrderService {
 
     constructor(
         @InjectRepository(OrderEntity)
-        private readonly orderEntity: Repository<OrderEntity>,
-        private readonly paymentService: PaymentService
+        private readonly orderRepository: Repository<OrderEntity>,
+        private readonly paymentService: PaymentService,
+        private readonly cartService: CartService,
+        private readonly orderProductService: OrderProductService
     ){}
 
 
-    async createOrder(createOrderDto: CreateOrderDto, cartId: number){
+    async createOrder(createOrderDto: CreateOrderDto, cartId: number, userId: number){
 
-        await this.paymentService.createPayment(createOrderDto);
+        const payment: PaymentEntity = await this.paymentService.createPayment(createOrderDto);
+
+        const order = await this.orderRepository.save({
+            addressId: createOrderDto.addressId,
+            date: new Date(),
+            paymentId: payment.id,
+            userId,
+        });
+
+        const cart = await this.cartService.findCartByUserId(userId, true);
+
+        cart.cartProduct?.forEach((cartProduct) => {
+            this.orderProductService.createOrderProduct(
+                cartProduct.productId,
+                order.id,
+                0,
+                cartProduct.amount
+            );
+        });
+
         return null;
     }
 }

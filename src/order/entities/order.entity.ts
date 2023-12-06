@@ -16,7 +16,7 @@ export class OrderEntity {
     userId: number;
 
     @Column({name: 'address_id', nullable: false})
-    addresId: number;
+    addressId: number;
 
     @Column({name: 'date', nullable: false})
     date: Date;

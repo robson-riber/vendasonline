@@ -1,4 +1,5 @@
 import { Body, Controller, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { UserId } from 'src/decorators/user-id.decorator';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrderService } from './order.service';
 
@@ -14,8 +15,9 @@ export class OrderController {
     @UsePipes(ValidationPipe)
     async createOrder(
         @Body() createOrderDto: CreateOrderDto,
-        @Param('cardId') cartId: number
+        @Param('cardId') cartId: number,
+        @UserId() userId: number
     ){
-        return this.orderService.createOrder(createOrderDto, cartId)
+        return this.orderService.createOrder(createOrderDto, cartId, userId)
     }
 }

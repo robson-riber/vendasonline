@@ -2,6 +2,9 @@ import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateOrderDto{
 
+    @IsNumber()
+    addressId: number;
+
     @IsOptional()
     @IsNumber()
     amountPayments?: number;
@@ -13,4 +16,5 @@ export class CreateOrderDto{
     @IsOptional()
     @IsString()
     datePayment?: string;
+
 }
