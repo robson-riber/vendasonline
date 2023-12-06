@@ -11,13 +11,12 @@ export class OrderController {
     ){}
 
 
-    @Post('/cart/:cartId')
+    @Post()
     @UsePipes(ValidationPipe)
     async createOrder(
         @Body() createOrderDto: CreateOrderDto,
-        @Param('cardId') cartId: number,
         @UserId() userId: number
     ){
-        return this.orderService.createOrder(createOrderDto, cartId, userId)
+        return this.orderService.createOrder(createOrderDto, userId)
     }
 }
