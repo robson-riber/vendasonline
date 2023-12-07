@@ -8,7 +8,7 @@ import { PaymentEntity } from 'src/payment/entities/payment.entity';
 import { PaymentService } from 'src/payment/payment.service';
 import { ProductEntity } from 'src/product/entities/product.entity';
 import { ProductService } from 'src/product/product.service';
-import { Repository } from 'typeorm';
+import { OrderedBulkOperation, Repository } from 'typeorm';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrderEntity } from './entities/order.entity';
 
@@ -96,6 +96,23 @@ export class OrderService {
 
         if (!orders || orders.length === 0 ){
             throw new NotFoundException('Nenhuma pedido encontrado.')
+        }
+
+        return orders;
+    }
+
+
+    async findAllOrders(): Promise<OrderEntity[]>{
+
+        const orders = await this.orderRepository.find({
+            relations: {
+                user: true,
+            }
+        });
+
+        if (!orders || orders.length === 0){
+            
+            throw new NotFoundException('Nenhum pedido encontrado!');
         }
 
         return orders;
