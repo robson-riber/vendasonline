@@ -52,4 +52,6 @@ Criar o Módulo
 nest g module "nome da tabela ou objeto"
 
 
+instalação do modulo para requisiçõe HTTP
+npm i --save @nestjs/axios axios
 

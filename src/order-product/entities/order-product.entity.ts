@@ -29,14 +29,12 @@ export class OrderProductEntity {
     updatedAt: Date;
 
 
-    @ManyToOne(() => OrderEntity, (order) => order.ordersProduct )
-    @JoinColumn({name: 'order_id', referencedColumnName: 'id'})
+    @ManyToOne(() => OrderEntity, (order) => order.ordersProduct)
+    @JoinColumn({ name: 'order_id', referencedColumnName: 'id' })
     order?: OrderEntity;
-
-    @ManyToOne(() => ProductEntity, (product) => product.ordersProduct )
-    @JoinColumn({name: 'product_id', referencedColumnName: 'id'})
+  
+    @ManyToOne(() => ProductEntity, (product) => product.ordersProduct)
+    @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
     product?: ProductEntity;
-
-
 
 }
