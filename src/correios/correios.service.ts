@@ -2,7 +2,9 @@ import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { AxiosError, AxiosResponse } from 'axios';
 import { CityService } from 'src/city/city.service';
+import { CityEntity } from 'src/city/entities/city.entity';
 import { ReturnCepExternal } from './dtos/return-cep-external.dto';
+import { ReturnCep } from './dtos/return-cep.dto';
 
 
 
@@ -17,7 +19,7 @@ export class CorreiosService {
         
     ) {}
 
-    async finAddressByCep(cep: string): Promise<ReturnCepExternal> {
+    async finAddressByCep(cep: string): Promise<ReturnCep> {
         const returnCEp: ReturnCepExternal = await this.httpService.axiosRef.get<ReturnCepExternal>( this.URL_CORREIOS.replace('{CEP}', cep)).then(
             (result) => {
                 if (result.data.erro === 'true'){
@@ -30,9 +32,10 @@ export class CorreiosService {
                 throw new BadRequestException(`Erro ao conectar com o servidor ViaCEp - ${error.message} `)
             });
 
-        const city = await this.cityService.findCityByName(returnCEp.localidade, returnCEp.uf);
+        const city: CityEntity | undefined = await this.cityService.findCityByName(returnCEp.localidade, returnCEp.uf).catch(() => undefined);
 
-        return returnCEp;
+
+        return new ReturnCep(returnCEp, city?.id, city?.state?.id);
     }
 
 
