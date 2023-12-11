@@ -1,8 +1,12 @@
 import { HttpService } from '@nestjs/axios';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { rejects } from 'assert';
 import { AxiosError, AxiosResponse } from 'axios';
+import { Client } from 'nestjs-soap';
+import { resolve } from 'path';
 import { CityService } from 'src/city/city.service';
 import { CityEntity } from 'src/city/entities/city.entity';
+import { ResponsePriceCorreios } from './dtos/response-price-correios';
 import { ReturnCepExternal } from './dtos/return-cep-external.dto';
 import { ReturnCep } from './dtos/return-cep.dto';
 
@@ -14,6 +18,8 @@ export class CorreiosService {
     URL_CORREIOS = process.env.URL_CEP_CORREIOS;
 
     constructor(
+        @Inject('SOAP_CORREIOS')
+        private readonly mySoapClient: Client,
         private readonly httpService: HttpService,
         private readonly cityService: CityService
         
@@ -36,6 +42,35 @@ export class CorreiosService {
 
 
         return new ReturnCep(returnCEp, city?.id, city?.state?.id);
+    }
+
+
+    async priceDelivery(): Promise<ResponsePriceCorreios>{
+
+        return new Promise((resolve) => {
+            this.mySoapClient.CalcPrecoPrazo({
+                nCdServico: '40010',
+                sCepOrigem: '02257000',
+                sCepDestino: '12947320',
+                //nCdFormato: CdFormatEnum.BOX,
+                nVlPeso: 2,
+                nVlComprimento: 20,
+                nVlAltura: 18,
+                nVlLargura: 15,
+                nVlDiametro: 5,
+                nCdEmpresa: '',
+                sDsSenha: '',
+                sCdMaoPropria: 'N',
+                nVlValorDeclarado:0,
+                sCdAvisoRecebimento: 'N',
+            }, (_, resp: ResponsePriceCorreios) => {
+                if (resp){
+                    resolve(resp);
+                }else {
+                    throw new BadRequestException('ERROR SOAP');
+                }
+            })
+        })
     }
 
 

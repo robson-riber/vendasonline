@@ -5,9 +5,8 @@ https://docs.nestjs.com
 https://dbdiagram.io/home
 
 
-https://github.com/juliossena/vendas-online-backend/
+https://transform.tools/json-to-typescript
 
-https://docs.nestjs.com
 
 
 Criando o Projeto
@@ -54,4 +53,8 @@ nest g module "nome da tabela ou objeto"
 
 instalação do modulo para requisiçõe HTTP
 npm i --save @nestjs/axios axios
+
+Biblioteca Soap
+npm install nestjs-soap
+
 
