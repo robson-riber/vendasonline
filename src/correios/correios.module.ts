@@ -13,6 +13,7 @@ import { SoapModule } from 'nestjs-soap';
     timeout: 5000,
     maxRedirects: 5}), CityModule],
   providers: [CorreiosService],
-  controllers: [CorreiosController]
+  controllers: [CorreiosController],
+  exports: [CorreiosService]
 })
 export class CorreiosModule {}

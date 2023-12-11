@@ -55,7 +55,17 @@ export class ProductController {
     ): Promise<ProductEntity>{
 
         return this.productService.updateProduct(updateProduct, productId);
-    } 
+    }
+    
+    
+    @Get('/:productId/delivery/:cep')
+    async findPriceDelivery(
+        @Param('productId') productId: number,
+        @Param('cep') cep: string
+    ): Promise<any>{
+
+        return this.productService.findPriceDelivery(cep, productId);
+    }
 
 
 }

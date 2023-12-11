@@ -10,10 +10,7 @@ export class CorreiosController {
         private readonly correiosService: CorreiosService
     ){}
 
-    @Get('/price-delivery')
-    async priceDelivery(): Promise<ResponsePriceCorreios>{
-        return this.correiosService.priceDelivery()
-    }
+ 
 
     @Get('/:cep')
     async finAll(

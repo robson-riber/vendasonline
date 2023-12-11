@@ -1,6 +1,9 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryService } from 'src/categoty/category.service';
+import { CorreiosService } from 'src/correios/correios.service';
+import { SizeProductDto } from 'src/correios/dtos/size-product.dto';
+import { CdServicoEnum } from 'src/correios/enums/cd-service.enum';
 import { DeleteResult, In, Repository } from 'typeorm';
 import { CountProduct } from './dtos/count-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -15,7 +18,8 @@ export class ProductService {
         private readonly productRepository: Repository<ProductEntity>,
 
         @Inject(forwardRef(() => CategoryService))
-        private readonly categoryService: CategoryService
+        private readonly categoryService: CategoryService,
+        private readonly correiosService: CorreiosService
 
     ){}
 
@@ -101,6 +105,19 @@ export class ProductService {
             .select('product.category_id, COUNT(*) as total')
             .groupBy('product.category_id')
             .getRawMany();
+    }
+
+
+    async findPriceDelivery(cep: string, idProduct: number){
+
+        const product = await this.findProductById(idProduct);
+
+        const sizeProduct = new SizeProductDto(product);
+
+        const returnCorreios = this.correiosService.priceDelivery(CdServicoEnum.PAC, cep, sizeProduct);
+
+        return returnCorreios;
+
     }
 
 

@@ -9,6 +9,8 @@ import { CityEntity } from 'src/city/entities/city.entity';
 import { ResponsePriceCorreios } from './dtos/response-price-correios';
 import { ReturnCepExternal } from './dtos/return-cep-external.dto';
 import { ReturnCep } from './dtos/return-cep.dto';
+import { SizeProductDto } from './dtos/size-product.dto';
+import { CdFormatEnum } from './enums/cd-format.enum';
 
 
 
@@ -16,6 +18,7 @@ import { ReturnCep } from './dtos/return-cep.dto';
 export class CorreiosService {
     
     URL_CORREIOS = process.env.URL_CEP_CORREIOS;
+    CEP_COMPANY = process.env.CEP_COMPANY;
 
     constructor(
         @Inject('SOAP_CORREIOS')
@@ -45,23 +48,23 @@ export class CorreiosService {
     }
 
 
-    async priceDelivery(): Promise<ResponsePriceCorreios>{
+    async priceDelivery(cdServico: string, cepDestino: string, sizeProductDto: SizeProductDto): Promise<ResponsePriceCorreios>{
 
         return new Promise((resolve) => {
             this.mySoapClient.CalcPrecoPrazo({
-                nCdServico: '40010',
-                sCepOrigem: '02257000',
-                sCepDestino: '12947320',
-                //nCdFormato: CdFormatEnum.BOX,
-                nVlPeso: 2,
-                nVlComprimento: 20,
-                nVlAltura: 18,
-                nVlLargura: 15,
-                nVlDiametro: 5,
+                nCdServico: cdServico,
+                sCepOrigem: this.CEP_COMPANY,
+                sCepDestino: cepDestino,
+                nCdFormato: CdFormatEnum.BOX,
+                nVlPeso: sizeProductDto.weight,
+                nVlComprimento: sizeProductDto.length,
+                nVlAltura: sizeProductDto.height,
+                nVlLargura: sizeProductDto.width,
+                nVlDiametro: sizeProductDto.diameter,
                 nCdEmpresa: '',
                 sDsSenha: '',
                 sCdMaoPropria: 'N',
-                nVlValorDeclarado:0,
+                nVlValorDeclarado: 0,
                 sCdAvisoRecebimento: 'N',
             }, (_, resp: ResponsePriceCorreios) => {
                 if (resp){
