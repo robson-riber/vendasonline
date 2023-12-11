@@ -5,6 +5,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { UserType } from 'src/user/enum/user-type.enum';
 import { DeleteResult } from 'typeorm';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
 import { ReturnProduct } from './dtos/return-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductEntity } from './entities/product.entity';
@@ -62,7 +63,7 @@ export class ProductController {
     async findPriceDelivery(
         @Param('productId') productId: number,
         @Param('cep') cep: string
-    ): Promise<any>{
+    ): Promise<ReturnPriceDeliveryDto>{
 
         return this.productService.findPriceDelivery(cep, productId);
     }
