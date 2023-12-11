@@ -1,10 +1,12 @@
 import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { count } from 'console';
 import { CountProduct } from 'src/product/dtos/count-product.dto';
 import { ProductService } from 'src/product/product.service';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateCategory } from './dtos/create-category.dto';
 import { ReturnCategory } from './dtos/return-category.dto';
+import { UpdateCategory } from './dtos/update-category.dto';
 import { CategoryEntity } from './entities/category.entity';
 
 @Injectable()
@@ -45,12 +47,19 @@ export class CategoryService {
     }
 
 
-    async findCategoryById(categoryId: number): Promise<CategoryEntity>{
+    async findCategoryById(categoryId: number, isRelations?: boolean): Promise<CategoryEntity>{
+
+        const relations = isRelations 
+        ? { 
+            products: true,
+        } 
+        : undefined;
 
         const category = await this.categoryRepository.findOne({
             where: {
-                id: categoryId
-            }
+                id: categoryId,
+            },
+            relations,
         })
 
         if (!category){
@@ -91,8 +100,30 @@ export class CategoryService {
     }
 
 
+    async deleteCategory(categoryId: number): Promise<DeleteResult>{
+
+        const category = await this.findCategoryById(categoryId, true);
+
+        console.log(category.products.length > 0);
+
+        if ( category.products?.length > 0){
+            throw new BadRequestException('Categoria não pode ser deletado por conter produtos relacionados.')
+        }
+
+        return this.categoryRepository.delete({id: categoryId});
+    }
 
 
+    async editCategory(categoryId: number, updateCategory: UpdateCategory): Promise<CategoryEntity>{
+
+        const category = await this.findCategoryById(categoryId);
+
+        return this.categoryRepository.save({
+            ...category,
+            ...updateCategory
+        })
+
+    }
 
 
 }

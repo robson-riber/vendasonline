@@ -13,6 +13,16 @@ export class UserController {
 
     constructor(private readonly userService: UserService){}
 
+    @Roles(UserType.Root)
+    @Post('/admin')
+    async createAdmin(
+        @Body() createUser: CreateUserDto
+    ): Promise<UserEntity>{
+
+        return this.userService.createUser(createUser, UserType.Admin);
+    }
+
+
     @UsePipes(ValidationPipe)
     @Post()
     async createUser(
@@ -20,7 +30,7 @@ export class UserController {
         return this.userService.createUser(createUser);
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Admin, UserType.Root)
     @Get('/all')
     async getAllUser(): Promise<ReturnUserDto[]>
     {
@@ -29,7 +39,7 @@ export class UserController {
         );
     }
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Admin, UserType.Root)
     @Get('/:userId')
     async getUserById(@Param('userId') userId: number) : Promise<ReturnUserDto> {
 
@@ -38,7 +48,7 @@ export class UserController {
         );
     }
 
-    @Roles(UserType.Admin, UserType.User)
+    @Roles(UserType.Admin, UserType.Root, UserType.User)
     @Patch()
     @UsePipes(ValidationPipe)
     async updatePasswordUser(
@@ -50,7 +60,7 @@ export class UserController {
     }     
     
 
-    @Roles(UserType.Admin, UserType.User)
+    @Roles(UserType.Admin, UserType.Root, UserType.User)
     @Get()
     async getInUser(
         @UserId() userId: number

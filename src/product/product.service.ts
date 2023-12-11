@@ -60,16 +60,24 @@ export class ProductService {
         await this.categoryService.findCategoryById(createProduct.categoryId);
 
         return this.productRepository.save({
-            ...createProduct
+            ...createProduct,
+            weight: createProduct.weight || 0,
+            width: createProduct.width || 0,
+            lenght: createProduct.lenght || 0,
+            diameter: createProduct.diameter || 0,
+            height: createProduct.height || 0
         })
     }
 
-    async findProductById(productId: number): Promise<ProductEntity>{
-
+    async findProductById(productId: number, isRelations?: boolean ): Promise<ProductEntity>{
+        
+        const relations = isRelations ? { category: true } : undefined;
+        
         const product = await this.productRepository.findOne({
             where:{
                 id: productId,
-            }
+            },
+            relations,
         });
 
         if(!product){

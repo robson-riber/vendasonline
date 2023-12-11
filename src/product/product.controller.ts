@@ -11,7 +11,7 @@ import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { ProductService } from './product.service';
 
-@Roles(UserType.Admin, UserType.User)
+@Roles(UserType.Admin, UserType.Root, UserType.User)
 @Controller('product')
 export class ProductController {
 
@@ -27,7 +27,16 @@ export class ProductController {
         );
     }
 
-    @Roles(UserType.Admin)
+
+    @Roles(UserType.Admin, UserType.Root, UserType.User)
+    @Get('/:productId')
+    async findProductById(
+        @Param('productId') productId: number): Promise<ReturnProduct>{   
+        return new ReturnProduct(await this.productService.findProductById(productId, true));
+    }
+
+
+    @Roles(UserType.Admin, UserType.Root)
     @UsePipes(ValidationPipe)
     @Post()
     async createProduct(
@@ -37,7 +46,7 @@ export class ProductController {
         return this.productService.createProduct(createProduct);
     } 
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Admin, UserType.Root)
     @Delete('/:productId')
     async deleteProduct(
         @Param('productId') productId: number
@@ -47,7 +56,7 @@ export class ProductController {
     } 
 
 
-    @Roles(UserType.Admin)
+    @Roles(UserType.Admin, UserType.Root)
     @UsePipes(ValidationPipe)
     @Put('/:productId')
     async updateProduct(
