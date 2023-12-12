@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Search, UsePipes, ValidationPipe } from '@nestjs/common';
 import { create } from 'domain';
 import { CreateAddressDto } from 'src/address/dto/createAddress.dto';
 import { Roles } from 'src/decorators/roles.decorator';
@@ -23,6 +23,17 @@ export class ProductController {
     async findAll(): Promise<ReturnProduct[]>{
         
         return (await this.productService.findAll([], true)).map(
+            (product) => new ReturnProduct(product)
+        );
+    }
+
+
+    @Get('/page')
+    async findAllpage(
+        @Query('search') search: string
+    ): Promise<ReturnProduct[]>{
+        
+        return (await this.productService.findAllPage(search)).map(
             (product) => new ReturnProduct(product)
         );
     }

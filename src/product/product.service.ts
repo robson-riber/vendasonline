@@ -4,7 +4,7 @@ import { CategoryService } from 'src/categoty/category.service';
 import { CorreiosService } from 'src/correios/correios.service';
 import { SizeProductDto } from 'src/correios/dtos/size-product.dto';
 import { CdServicoEnum } from 'src/correios/enums/cd-service.enum';
-import { DeleteResult, In, Repository } from 'typeorm';
+import { DeleteResult, ILike, In, Like, Repository } from 'typeorm';
 import { CountProduct } from './dtos/count-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
@@ -24,7 +24,30 @@ export class ProductService {
 
     ){}
 
-    async findAll(productId?: number[], isFindRelations?: boolean): Promise<ProductEntity[]>{
+
+    async findAllPage(search?: string): Promise<ProductEntity[]>{
+
+        let findOptions = {};
+
+        if(search){
+            findOptions = {
+                where: {
+                    name: ILike(`%${search}%`)
+                }
+            }
+        }
+
+        const products = await this.productRepository.find(findOptions);
+
+        if (!products || products.length === 0 ){
+            throw new NotFoundException('Nenhum produto encontrado.');
+        }
+
+        return products;
+
+    }
+
+    async findAll(productId?: number[], isFindRelations?: boolean  ): Promise<ProductEntity[]>{
 
         let findOptions = {};
 

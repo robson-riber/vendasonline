@@ -55,4 +55,14 @@ export class CategoryController {
 
     }
 
+
+    @Get(':categoryId')
+    async findCategoryById(
+        @Param('categoryId') categoryId: number,
+    ): Promise<ReturnCategory>{
+
+        return new ReturnCategory( await this.categoryService.findCategoryById(categoryId, true));
+
+    }
+
 }

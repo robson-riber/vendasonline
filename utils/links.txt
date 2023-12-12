@@ -8,6 +8,8 @@ https://dbdiagram.io/home
 https://transform.tools/json-to-typescript
 
 
+https://typeorm.io/find-options
+
 
 Criando o Projeto
 nest new "nome do projeto"
